@@ -56,7 +56,7 @@ class CoursesController {
         var formData = req.body;
         formData.image = `https://files.fullstack.edu.vn/f8-prod/courses/${req.body.image}`;
         CourseModel.updateOne({ _id: req.params.id }, formData)
-            .then(() => res.redirect('back'))
+            .then(() => res.redirect('/me/stored/courses'))
             .catch((err) => {
                 res.status(500).send("Error saving course");
             });
