@@ -37,7 +37,7 @@ class CoursesController {
         const course = new CourseModel(formData);
         course
             .save()
-            .then(() => res.redirect("/courses/"))
+            .then(() => res.redirect('/me/stored/courses'))
             .catch((err) => {
                 res.status(500).send("Error saving course");
             });
@@ -55,20 +55,36 @@ class CoursesController {
     update(req, res, next) {
         var formData = req.body;
         formData.image = `https://files.fullstack.edu.vn/f8-prod/courses/${req.body.image}`;
-        CourseModel.updateOne( {_id:req.params.id} , formData)
-            .then(() => res.redirect("/me/stored/courses"))
+        CourseModel.updateOne({ _id: req.params.id }, formData)
+            .then(() => res.redirect('back'))
             .catch((err) => {
                 res.status(500).send("Error saving course");
             });
-        }
+    }
 
-        delete(req, res, next) {
-            CourseModel.deleteOne( {_id:req.params.id} )
-                .then(() => res.redirect('back'))
-                .catch((err) => {
-                    res.status(500).send("Error saving course");
-                });
-            }    
+    restore(req, res, next) {
+        CourseModel.restore({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch((err) => {
+                res.status(500).send("Error saving course");
+            });
+    }
+
+    delete(req, res, next) {
+        CourseModel.delete({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch((err) => {
+                res.status(500).send("Error saving course");
+            });
+    }
+
+    forceDelete(req, res, next) {
+        CourseModel.deleteOne({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch((err) => {
+                res.status(500).send("Error saving course");
+            });
+    }
 }
 
 module.exports = new CoursesController();
