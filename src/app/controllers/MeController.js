@@ -22,16 +22,6 @@ class MeController {
             .catch(next);
         }
 
-    //     coursesModel.find({}).lean()
-    //         .then((courses) => {
-    //             res.render("courses/stored-courses", {
-    //                 title: "Danh sách khóa học",
-    //                 courses: courses,
-    //             });
-    //         })
-    //         .catch(next);
-
-
     trashCourses(req, res, next) {
         coursesModel.findWithDeleted({ deleted: true }).lean()
             .then((courses) => {
