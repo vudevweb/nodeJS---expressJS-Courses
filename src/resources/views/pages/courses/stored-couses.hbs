@@ -1,0 +1,91 @@
+<!-- striped rows -->
+<div class="table-responsive overflow-y-hidden">
+    <div class="text-center mb-3 mt-4">
+        <a href="/courses/create" class="btn btn-success">Tạo khóa học</a>
+    </div>
+    <table class="table mb-0 text-nowrap table-hover table-centered text-nowrap">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">khóa học</th>
+                <th scope="col">Trạng thái</th>
+                <th scope="col">Thời gian tạo</th>
+                <th scope="col">Setting</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each courses}}
+            <tr>
+                <th scope="row">{{sum @index 1}}</th>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <a href="#">
+                                <img src="{{this.image}}" alt="{{this.name}}" class="rounded img-4by3-lg"></a>
+                        </div>
+                        <div class="ms-3">
+                            <h4 class="mb-1 h5">
+                                <a href="#" class="text-inherit">
+                                    {{this.name}}
+                                </a>
+                            </h4>
+                            <ul class="list-inline fs-6 mb-0">
+                                <li class="list-inline-item">
+                                    <i class="mdi mdi-clock-time-four-outline text-muted me-1"></i>1h 30m
+                                </li>
+                                <li class="list-inline-item">
+                                    <svg class="me-1 mt-n1" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="3" y="8" width="2" height="6" rx="1" fill="#754FFE"></rect>
+                                        <rect x="7" y="5" width="2" height="9" rx="1" fill="#DBD8E9"></rect>
+                                        <rect x="11" y="2" width="2" height="12" rx="1" fill="#DBD8E9"></rect>
+                                    </svg>Beginner
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+                <td><span class="badge bg-success">Live</span></td>
+                <td>{{this.updatedAt}}</td>
+                <td><span class="dropdown dropstart">
+                        <a class="btn-icon btn btn-ghost btn-sm rounded-circle " href="#" role="button"
+                            id="courseDropdown" data-bs-toggle="dropdown" data-bs-offset="-20,20" aria-expanded="false">
+                            <i class="fe fe-more-vertical"></i>
+                        </a>
+                        <span class="dropdown-menu" aria-labelledby="courseDropdown">
+                            <span class="dropdown-header">Setting </span>
+                            <a class="dropdown-item" href="/courses/{{this._id}}/edit"><i
+                                    class="fe fe-edit dropdown-item-icon"></i>Sửa</a>
+                            <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#delete_id{{this._id}}"><i
+                                    class="fe fe-trash dropdown-item-icon"></i>Xóa</a>
+                        </span>
+                    </span></td>
+            </tr>
+            <!-- Modal -->
+            <div class="modal fade" id="delete_id{{this._id}}" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Thông báo</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Bạn có chắc chắn muốn xóa khóa học <strong>{{this.name}}</strong>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                            <form action="/courses/{{this._id}}/delete?_method=delete" method="post">
+                                    <button type="submit" class="btn btn-danger">Xóa ngay</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{!-- end model --}}
+            {{/each}}
+        </tbody>
+    </table>
+</div>
