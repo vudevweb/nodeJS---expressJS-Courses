@@ -10,9 +10,20 @@
       Thùng rác ({{deletedCount}})
     </a>
   </div>
+
+  <div class="py-4 row" style="margin: 0;">
+    <div class="col-2 col-md-2 col-lg-2"><button disabled class="checkAll-btn-submit btn btn-danger w-100">Xóa</button>
+    </div>
+    <form class="d-flex align-items-center col-10 col-md-10 col-lg-10">
+      <span class="position-absolute ps-3 search-icon"><i class="fe fe-search"></i></span>
+      <input type="search" class="form-control ps-6" placeholder="Search Course">
+    </form>
+  </div>
+
   <table class="table mb-0 text-nowrap table-hover table-centered text-nowrap">
     <thead>
       <tr>
+        <th scope="col"><input class="form-check-input" type="checkbox" id="checkbox_all" value=""></th>
         <th scope="col">#</th>
         <th scope="col">khóa học</th>
         <th scope="col">Trạng thái</th>
@@ -23,16 +34,17 @@
     <tbody>
       {{#each courses}}
       <tr>
+        <td><input class="form-check-input" type="checkbox" name="courseIds[]" value="{{this._id}}"></td>
         <th scope="row">{{sum @index 1}}</th>
         <td>
           <div class="d-flex align-items-center">
             <div>
-              <a href="#">
+              <a href="/courses/{{this.slug}}">
                 <img src="{{this.image}}" alt="{{this.name}}" class="rounded img-4by3-lg" /></a>
             </div>
             <div class="ms-3">
               <h4 class="mb-1 h5">
-                <a href="#" class="text-inherit">
+                <a href="/courses/{{this.slug}}" class="text-inherit">
                   {{this.name}}
                 </a>
               </h4>
@@ -104,3 +116,37 @@
     </tbody>
   </table>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const checkbox_all = $("#checkbox_all");
+    const itemCheckBoxes = $('input[name="courseIds[]"]');
+    const checkAll_btn_submit = $('.checkAll-btn-submit');
+    checkbox_all.change(function () {
+      var isCheckAll = $(this).prop("checked");
+      itemCheckBoxes.prop("checked", isCheckAll);
+      statusBtnSubmit()
+    });
+
+    itemCheckBoxes.change(function () {
+      var isCheckAllItem = itemCheckBoxes.length === $('input[name="courseIds[]"]:checked').length;
+      checkbox_all.prop("checked", isCheckAllItem);
+      statusBtnSubmit()
+    });
+
+    function statusBtnSubmit() {
+      var checkedCount = $('input[name="courseIds[]"]:checked').length
+      if (checkedCount > 0) {
+        checkAll_btn_submit.prop("disabled", false);
+      } else {
+        checkAll_btn_submit.prop("disabled", true);
+      }
+    }
+
+    checkAll_btn_submit.click(function() {
+      alert('đang phát triển')
+    })
+
+
+  })
+</script>
