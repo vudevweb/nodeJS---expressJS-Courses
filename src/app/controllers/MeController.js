@@ -10,7 +10,8 @@ class MeController {
     }
 
     courses(req, res, next) {
-        Promise.all([coursesModel.find({}).lean(), coursesModel.countDocumentsWithDeleted({ deleted:true })])
+        let coursesQuery = coursesModel.find({}).lean()
+        Promise.all([coursesQuery, coursesModel.countDocumentsWithDeleted({ deleted:true })])
             .then(([courses, deletedCount]) => {
                 console.log(deletedCount)
                 res.render("courses/stored-courses", {

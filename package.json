@@ -7,7 +7,7 @@
     "node": "20.x"
   },
   "scripts": {
-    "start": "node --watch --inspect index.js",
+    "start": "node index.js",
     "watch": "node-sass --watch src/resources/scss/ --output src/public/css/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
